@@ -3,34 +3,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package view.menu;
-
-import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.net.URL;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Arrays;
-import java.util.List;
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import view.cart.CartFrame;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.SwingConstants;
-import javax.swing.table.DefaultTableModel;
 import model.Cart;
 import model.Product;
 import view.chatbot.Chat;
