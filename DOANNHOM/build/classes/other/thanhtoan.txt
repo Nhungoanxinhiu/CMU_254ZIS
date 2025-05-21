@@ -1,0 +1,11 @@
+=== ĐƠN HÀNG MỚI ===
+Họ tên: nhu
+Số điện thoại: uuu
+Địa chỉ: u
+Ghi chú: t
+--- Chi tiết đơn hàng ---
+1	Trà sữa trứng nướng	1	35000	
+2	Trà sữa dâu	1	30000	
+Tổng tiền: 65.000
+=========================================
+

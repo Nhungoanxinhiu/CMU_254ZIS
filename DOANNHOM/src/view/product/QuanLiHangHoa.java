@@ -4,9 +4,12 @@
  */
 package view.product;
 
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -22,6 +25,34 @@ public class QuanLiHangHoa extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null); // Dòng này căn giữa cửa sổ
     }
+    public void saveToFile(JTable table) {
+    try {
+        File file = new File("C:\\Users\\Admin\\Documents\\CMU_254ZIS\\DOANNHOM\\src\\other\\danhsach_hanghoa.txt");
+        FileWriter fw = new FileWriter(file);
+        BufferedWriter bw = new BufferedWriter(fw);
+
+        // Ghi tên cột
+        for (int i = 0; i < table.getColumnCount(); i++) {
+            bw.write(table.getColumnName(i) + "\t");
+        }
+        bw.newLine();
+
+        // Ghi từng dòng dữ liệu
+        for (int i = 0; i < table.getRowCount(); i++) {
+            for (int j = 0; j < table.getColumnCount(); j++) {
+                Object value = table.getValueAt(i, j);
+                bw.write((value != null ? value.toString() : "") + "\t");
+            }
+            bw.newLine();
+        }
+
+        bw.close();
+        fw.close();
+        JOptionPane.showMessageDialog(null, "Lưu thành công vào src/other/danhsach_hanghoa.txt");
+    } catch (IOException e) {
+        JOptionPane.showMessageDialog(null, "Lỗi khi lưu: " + e.getMessage());
+    }
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -38,7 +69,7 @@ public class QuanLiHangHoa extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tableHangHoa = new javax.swing.JTable();
         textField1 = new java.awt.TextField();
         jLabel2 = new javax.swing.JLabel();
         textField2 = new java.awt.TextField();
@@ -49,7 +80,7 @@ public class QuanLiHangHoa extends javax.swing.JFrame {
         button2 = new java.awt.Button();
         button3 = new java.awt.Button();
         button5 = new java.awt.Button();
-        button6 = new java.awt.Button();
+        btnLuu = new java.awt.Button();
 
         label1.setText("label1");
 
@@ -67,7 +98,7 @@ public class QuanLiHangHoa extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel1.setText("QUẢN LÝ HÀNG HOÁ");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tableHangHoa.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -79,7 +110,7 @@ public class QuanLiHangHoa extends javax.swing.JFrame {
                 "STT", "Tên hàng hoá", "Số lượng", "Chi phí", "Tổng tiền"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tableHangHoa);
 
         textField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -133,10 +164,10 @@ public class QuanLiHangHoa extends javax.swing.JFrame {
             }
         });
 
-        button6.setLabel("Lưu");
-        button6.addActionListener(new java.awt.event.ActionListener() {
+        btnLuu.setLabel("Lưu");
+        btnLuu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button6ActionPerformed(evt);
+                btnLuuActionPerformed(evt);
             }
         });
 
@@ -171,9 +202,9 @@ public class QuanLiHangHoa extends javax.swing.JFrame {
                             .addComponent(button3, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(62, 62, 62)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(button6, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnLuu, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(52, Short.MAX_VALUE))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -210,7 +241,7 @@ public class QuanLiHangHoa extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(textField3, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(button3, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(button6, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(btnLuu, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(27, Short.MAX_VALUE))
         );
 
@@ -256,15 +287,15 @@ public class QuanLiHangHoa extends javax.swing.JFrame {
         double tongTien = Integer.parseInt(soLuong) * Double.parseDouble(chiPhi);
 
         // Thêm dòng mới vào bảng
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        DefaultTableModel model = (DefaultTableModel) tableHangHoa.getModel();
         model.addRow(new Object[]{model.getRowCount() + 1, tenHangHoa, soLuong, chiPhi, tongTien});
     }//GEN-LAST:event_button1ActionPerformed
 
     private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
         // Lấy chỉ số dòng được chọn
-        int selectedRow = jTable1.getSelectedRow();
+        int selectedRow = tableHangHoa.getSelectedRow();
         if (selectedRow != -1) {
-            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            DefaultTableModel model = (DefaultTableModel) tableHangHoa.getModel();
             model.removeRow(selectedRow); // Xóa dòng đã chọn
         } else {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn một dòng để xóa!");
@@ -273,7 +304,7 @@ public class QuanLiHangHoa extends javax.swing.JFrame {
 
     private void button3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button3ActionPerformed
         // Lấy chỉ số dòng được chọn
-        int selectedRow = jTable1.getSelectedRow();
+        int selectedRow = tableHangHoa.getSelectedRow();
         if (selectedRow != -1) {
             // Lấy dữ liệu từ các TextField
             String tenHangHoa = textField1.getText();
@@ -290,10 +321,10 @@ public class QuanLiHangHoa extends javax.swing.JFrame {
             double tongTien = Integer.parseInt(soLuong) * Double.parseDouble(chiPhi);
 
             // Cập nhật thông tin vào bảng
-            jTable1.setValueAt(tenHangHoa, selectedRow, 1);
-            jTable1.setValueAt(soLuong, selectedRow, 2);
-            jTable1.setValueAt(chiPhi, selectedRow, 3);
-            jTable1.setValueAt(tongTien, selectedRow, 4);
+            tableHangHoa.setValueAt(tenHangHoa, selectedRow, 1);
+            tableHangHoa.setValueAt(soLuong, selectedRow, 2);
+            tableHangHoa.setValueAt(chiPhi, selectedRow, 3);
+            tableHangHoa.setValueAt(tongTien, selectedRow, 4);
         } else {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn một dòng để cập nhật!");
         }
@@ -302,7 +333,7 @@ public class QuanLiHangHoa extends javax.swing.JFrame {
     private void button4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button4ActionPerformed
         try {
             FileWriter writer = new FileWriter("hanghoa.csv");
-            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            DefaultTableModel model = (DefaultTableModel) tableHangHoa.getModel();
 
             // Ghi tiêu đề cột
             for (int i = 0; i < model.getColumnCount(); i++) {
@@ -336,9 +367,11 @@ public class QuanLiHangHoa extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_button5ActionPerformed
 
-    private void button6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_button6ActionPerformed
+    private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
+
+        saveToFile(tableHangHoa);
+            // TODO add your handling code here:
+    }//GEN-LAST:event_btnLuuActionPerformed
 
     /**
      * @param args the command line arguments
@@ -376,12 +409,12 @@ public class QuanLiHangHoa extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private java.awt.Button btnLuu;
     private java.awt.Button button1;
     private java.awt.Button button2;
     private java.awt.Button button3;
     private java.awt.Button button4;
     private java.awt.Button button5;
-    private java.awt.Button button6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -389,8 +422,8 @@ public class QuanLiHangHoa extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTable1;
     private java.awt.Label label1;
+    private javax.swing.JTable tableHangHoa;
     private java.awt.TextField textField1;
     private java.awt.TextField textField2;
     private java.awt.TextField textField3;

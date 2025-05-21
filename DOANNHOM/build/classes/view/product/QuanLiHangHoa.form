@@ -92,12 +92,12 @@
                           </Group>
                           <EmptySpace min="-2" pref="62" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="button6" min="-2" pref="75" max="-2" attributes="0"/>
+                              <Component id="btnLuu" min="-2" pref="75" max="-2" attributes="0"/>
                               <Component id="button2" min="-2" pref="75" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
-                  <EmptySpace pref="52" max="32767" attributes="0"/>
+                  <EmptySpace pref="55" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -145,7 +145,7 @@
                           <Group type="103" groupAlignment="1" attributes="0">
                               <Component id="textField3" min="-2" pref="24" max="-2" attributes="0"/>
                               <Component id="button3" min="-2" pref="33" max="-2" attributes="0"/>
-                              <Component id="button6" min="-2" pref="33" max="-2" attributes="0"/>
+                              <Component id="btnLuu" min="-2" pref="33" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -170,7 +170,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTable" name="jTable1">
+            <Component class="javax.swing.JTable" name="tableHangHoa">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                   <Table columnCount="5" rowCount="5">
@@ -279,12 +279,12 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button5ActionPerformed"/>
           </Events>
         </Component>
-        <Component class="java.awt.Button" name="button6">
+        <Component class="java.awt.Button" name="btnLuu">
           <Properties>
             <Property name="label" type="java.lang.String" value="L&#x1b0;u"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button6ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLuuActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

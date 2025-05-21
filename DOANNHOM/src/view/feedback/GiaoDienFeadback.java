@@ -4,7 +4,15 @@
  */
 package view.feedback;
 
+
+import java.io.FileWriter;
+import java.io.IOException;
+
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
 import model.DonHang;
+import view.auth.RoleSelection1;
 
 
 
@@ -20,6 +28,7 @@ public class GiaoDienFeadback extends javax.swing.JFrame {
 
     private final javax.swing.JLabel[] starLabels = new javax.swing.JLabel[5];
     private int rating = 0;
+    
 
     /**
      * Creates new form GiaoDienFeadback
@@ -40,6 +49,26 @@ public class GiaoDienFeadback extends javax.swing.JFrame {
     setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     pack(); // 👈 thay cho setSize(...) nếu layout hợp lý
 }
+   private void luuDanhGia() {
+    if (rating == 0) {
+        JOptionPane.showMessageDialog(this, "Vui lòng chọn số sao trước khi gửi!");
+        return;
+    }
+    try (FileWriter writer = new FileWriter("C:\\Users\\Admin\\Documents\\CMU_254ZIS\\DOANNHOM\\src\\other\\fb.txt", true)) {
+    writer.write("Số sao: " + rating + "\n");
+    writer.write("Nhận xét: " + jTextArea1.getText().trim() + "\n");
+    writer.write("------------------------------\n");
+    JOptionPane.showMessageDialog(this, "Gửi đánh giá thành công!");
+} catch (IOException e) {
+    e.printStackTrace();
+    JOptionPane.showMessageDialog(this, "Lỗi khi ghi file: " + e.getMessage());
+}
+
+}
+
+
+   
+  
 
     
 
@@ -172,6 +201,11 @@ public class GiaoDienFeadback extends javax.swing.JFrame {
         jLabel1.setText("ĐÁNH GIÁ CỦA BẠN");
 
         button1.setLabel("Back");
+        button1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -183,7 +217,6 @@ public class GiaoDienFeadback extends javax.swing.JFrame {
                         .addGap(30, 30, 30)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(panelSao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(171, 171, 171))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -244,8 +277,15 @@ public class GiaoDienFeadback extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel5MouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
+
+        luuDanhGia();
+           
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
+new RoleSelection1().setVisible(true);
+        this.dispose();       // TODO add your handling code here:
+    }//GEN-LAST:event_button1ActionPerformed
     private void capNhatSao(int soSao) {
         rating = soSao;
         for (int i = 0; i < starLabels.length; i++) {

@@ -5,6 +5,10 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.datatransfer.*;
 import java.awt.event.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class Chat extends JFrame {
     private JPanel chatPanel;  
@@ -135,15 +139,35 @@ public class Chat extends JFrame {
             vertical.setValue(vertical.getMaximum());
         });
     }
+   private void saveChatToFile(String message) {
+    String path = "C:\\Users\\Admin\\Documents\\CMU_254ZIS\\DOANNHOM\\src\\other\\chat.txt";
+    // Tạo thư mục nếu chưa tồn tại
+    File file = new File(path);
+    File parentDir = file.getParentFile();
+    if (!parentDir.exists()) {
+        parentDir.mkdirs();
+    }
+   try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))) {
+        writer.write(message);
+        writer.newLine();
+    } catch (IOException e) {
+        e.printStackTrace();
+    }}
 
     private void handleSend() {
-        String userInput = inputField.getText().trim();
-        if (!userInput.isEmpty()) {
-            addMessage("Bạn: " + userInput, true);
-            addMessage("Bot: " + generateResponse(userInput), false);
-            inputField.setText("");
-        }
+    String userInput = inputField.getText().trim();
+    if (!userInput.isEmpty()) {
+        String userMsg = "Bạn: " + userInput;
+        addMessage(userMsg, true);
+        saveChatToFile(userMsg);
+
+        String botResponse = "Bot: " + generateResponse(userInput);
+        addMessage(botResponse, false);
+        saveChatToFile(botResponse);
+
+        inputField.setText("");
     }
+}
 
     private String generateResponse(String input) {
         if (input.equalsIgnoreCase("Thực đơn")) {

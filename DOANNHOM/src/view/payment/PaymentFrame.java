@@ -5,7 +5,11 @@
 package view.payment;
 
 import control.AppController;
-
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import javax.swing.JCheckBox;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -19,43 +23,79 @@ import model.DonHang;
 import model.Product;
 import view.Hitstory.HistoryFrame;
 
-
 /**
  *
  * @author Admin
  */
 public class PaymentFrame extends javax.swing.JFrame {
-   
+
     /**
      * Creates new form PaymenFrames
      */
     public PaymentFrame() {
-    initComponents();
-    loadTable(); // Load dữ liệu giỏ hàng
-    this.setLocationRelativeTo(null); // Căn giữa cửa sổ
-}
-    private void loadTable() {
-    DefaultTableModel model = (DefaultTableModel) jTableDonHang.getModel(); // jTableDonHang là bảng đơn hàng
-    model.setRowCount(0); // Xóa dữ liệu cũ
-
-    int tongTien = 0;
-    int stt = 1;
-
-    for (Product p : Cart.getDanhSach()) {
-        int thanhTien = p.getGia() * p.getSoLuong();
-        Object[] row = {stt, p.getTen(), p.getSoLuong(), thanhTien};
-        model.addRow(row);
-        tongTien += thanhTien;
-        stt++;
+        initComponents();
+        loadTable(); // Load dữ liệu giỏ hàng
+        this.setLocationRelativeTo(null); // Căn giữa cửa sổ
     }
 
-    NumberFormat format = NumberFormat.getInstance();
-    txtTongTien.setText(format.format(tongTien)); // txtTongTien là JTextField hiển thị tổng tiền
-}
+    private void loadTable() {
+        DefaultTableModel model = (DefaultTableModel) jTableDonHang.getModel(); // jTableDonHang là bảng đơn hàng
+        model.setRowCount(0); // Xóa dữ liệu cũ
 
+        int tongTien = 0;
+        int stt = 1;
 
-    
-    
+        for (Product p : Cart.getDanhSach()) {
+            int thanhTien = p.getGia() * p.getSoLuong();
+            Object[] row = {stt, p.getTen(), p.getSoLuong(), thanhTien};
+            model.addRow(row);
+            tongTien += thanhTien;
+            stt++;
+        }
+
+        NumberFormat format = NumberFormat.getInstance();
+        txtTongTien.setText(format.format(tongTien)); // txtTongTien là JTextField hiển thị tổng tiền
+    }
+
+    public void luuThanhToan() {
+        try {
+            File file = new File("src/other/thanhtoan.txt");
+            FileWriter fw = new FileWriter(file, true); // true để ghi tiếp vào file
+            BufferedWriter bw = new BufferedWriter(fw);
+
+            // Ghi thông tin khách hàng
+            bw.write("=== ĐƠN HÀNG MỚI ===\n");
+            bw.write("Họ tên: " + txtHoTen.getText() + "\n");
+            bw.write("Số điện thoại: " + txtSDT.getText() + "\n");
+            bw.write("Địa chỉ: " + txtDiaChi.getText() + "\n");
+            bw.write("Ghi chú: " + txtGhiChu.getText() + "\n");
+
+            // Ghi hình thức nhận hàng
+          
+
+            // Ghi bảng đơn hàng
+            bw.write("--- Chi tiết đơn hàng ---\n");
+            for (int i = 0; i < jTableDonHang.getRowCount(); i++) {
+                for (int j = 0; j < jTableDonHang.getColumnCount(); j++) {
+                    Object value = jTableDonHang.getValueAt(i, j);
+                    bw.write((value != null ? value.toString() : "") + "\t");
+                }
+                bw.write("\n");
+            }
+
+            // Ghi tổng tiền
+            bw.write("Tổng tiền: " + txtTongTien.getText() + "\n");
+            bw.write("=========================================\n\n");
+
+            bw.close();
+            fw.close();
+
+            // KHÔNG HIỆN JOptionPane
+        } catch (IOException e) {
+            // CŨNG KHÔNG HIỆN JOptionPane khi lỗi
+            e.printStackTrace(); // Ghi lỗi ra console để lập trình viên biết
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -306,51 +346,54 @@ public class PaymentFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_txtSDTActionPerformed
 
     private void btnThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThanhToanActionPerformed
-btnThanhToan.addActionListener(e -> {
-    List<String> tenMonList = new ArrayList<>();
-    List<Integer> soLuongList = new ArrayList<>();
-    List<Integer> giaTienList = new ArrayList<>();
-    int tongTien = 0;
+        btnThanhToan.addActionListener(e -> {
+            List<String> tenMonList = new ArrayList<>();
+            List<Integer> soLuongList = new ArrayList<>();
+            List<Integer> giaTienList = new ArrayList<>();
+            int tongTien = 0;
 
-    DefaultTableModel model = (DefaultTableModel) jTableDonHang.getModel();
-    for (int i = 0; i < model.getRowCount(); i++) {
-        String tenMon = model.getValueAt(i, 1).toString();
-        int soLuong = Integer.parseInt(model.getValueAt(i, 2).toString());
-        int giaTien = Integer.parseInt(model.getValueAt(i, 3).toString());
+            DefaultTableModel model = (DefaultTableModel) jTableDonHang.getModel();
+            for (int i = 0; i < model.getRowCount(); i++) {
+                String tenMon = model.getValueAt(i, 1).toString();
+                int soLuong = Integer.parseInt(model.getValueAt(i, 2).toString());
+                int giaTien = Integer.parseInt(model.getValueAt(i, 3).toString());
 
-        tenMonList.add(tenMon);
-        soLuongList.add(soLuong);
-        giaTienList.add(giaTien);
-        tongTien += giaTien;
-    }
+                tenMonList.add(tenMon);
+                soLuongList.add(soLuong);
+                giaTienList.add(giaTien);
+                tongTien += giaTien;
+            }
 
-    String hinhThuc = checkBoxGiaoHang.getState() ? "Giao hàng" :
-                  checkBoxNhanTaiQuan.getState() ? "Nhận tại quán" : "";
+            String hinhThuc = checkBoxGiaoHang.getState() ? "Giao hàng"
+                    : checkBoxNhanTaiQuan.getState() ? "Nhận tại quán" : "";
 
+            DonHang donHang = new DonHang(
+                    txtHoTen.getText(),
+                    txtSDT.getText(),
+                    txtDiaChi.getText(),
+                    txtGhiChu.getText(),
+                    hinhThuc,
+                    tenMonList,
+                    soLuongList,
+                    giaTienList,
+                    tongTien
+            );
 
-    DonHang donHang = new DonHang(
-        txtHoTen.getText(),
-        txtSDT.getText(),
-        txtDiaChi.getText(),
-        txtGhiChu.getText(),
-        hinhThuc,
-        tenMonList,
-        soLuongList,
-        giaTienList,
-        tongTien
-    );
-
-    AppController.lichSuDonHang.add(donHang);
-    JOptionPane.showMessageDialog(null, "Đặt hàng thành công!");
-});
+            AppController.lichSuDonHang.add(donHang);
+            JOptionPane.showMessageDialog(null, "Đặt hàng thành công!");
+            
+        luuThanhToan();
+    
+        });
+        
 
         // TODO add your handling code here:
     }//GEN-LAST:event_btnThanhToanActionPerformed
 
     private void btnLichSuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLichSuActionPerformed
-btnLichSu.addActionListener(e -> {
-    new HistoryFrame().setVisible(true);
-});
+        btnLichSu.addActionListener(e -> {
+            new HistoryFrame().setVisible(true);
+        });
         // TODO add your handling code here:
     }//GEN-LAST:event_btnLichSuActionPerformed
 

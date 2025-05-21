@@ -54,11 +54,12 @@ public class ThuNhapQuanLy extends javax.swing.JFrame {
         );
 
     }
+    
 
-    private void luuFileToDocuments() {
+private void luuFileToDocuments() {
         // Lấy thư mục Documents trong hệ thống
         String userHome = System.getProperty("user.home");
-        String documentsFolder = userHome + File.separator + "Documents";  // Thư mục Documents
+        String documentsFolder = userHome + File.separator + "Documents" ;  // Thư mục Documents
 
         // Đảm bảo thư mục Documents tồn tại
         File folder = new File(documentsFolder);
@@ -105,6 +106,7 @@ public class ThuNhapQuanLy extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Có lỗi khi lưu file: " + e.getMessage());
         }
     }
+    
 
     /**
      * Creates new form QuanLiThuNhap
