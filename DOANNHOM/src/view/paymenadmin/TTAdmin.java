@@ -6,6 +6,7 @@ package view.paymenadmin;
 
 import java.awt.BorderLayout;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -218,48 +219,54 @@ public class TTAdmin extends javax.swing.JFrame {
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
 
-        try {
-            String tenMon = txtTenMon.getText().trim();
-            String giaStr = txtGia.getText().trim();
-            String soBan = txtSoBan.getText().trim();
+       try {
+    String tenMon = txtTenMon.getText().trim();
+    String giaStr = txtGia.getText().trim();
+    String soBan = txtSoBan.getText().trim();
 
-            // Kiểm tra dữ liệu đầu vào
-            if (tenMon.isEmpty() || giaStr.isEmpty() || soBan.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin.");
-                return;
-            }
+    if (tenMon.isEmpty() || giaStr.isEmpty() || soBan.isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin.");
+        return;
+    }
 
-            double gia = Double.parseDouble(giaStr);
-            DecimalFormat df = new DecimalFormat("#,###");
-            String giaFormatted = df.format(gia);
+    double gia = Double.parseDouble(giaStr);
+    DecimalFormat df = new DecimalFormat("#,###");
+    String giaFormatted = df.format(gia);
 
-            // Thêm vào bảng
-            DefaultTableModel model = (DefaultTableModel) table.getModel();
-            model.addRow(new Object[]{tenMon, gia, soBan});
+    // Thêm vào bảng
+    DefaultTableModel model = (DefaultTableModel) table.getModel();
+    model.addRow(new Object[]{tenMon, gia, soBan});
 
-            // Cộng dồn tổng tiền
-            double tongHienTai = Double.parseDouble(txtTongTien.getText());
-            double tongMoi = tongHienTai + gia;
-            txtTongTien.setText(String.valueOf(tongMoi));
+    // Cộng dồn tổng tiền
+    double tongHienTai = Double.parseDouble(txtTongTien.getText());
+    double tongMoi = tongHienTai + gia;
+    txtTongTien.setText(String.valueOf(tongMoi));
 
-            // Ghi vào file
-            try (FileWriter fw = new FileWriter("C:\\Users\\Admin\\Documents\\CMU_254ZIS\\DOANNHOM\\src\\other\\thanhtoanadm.txt", true); BufferedWriter bw = new BufferedWriter(fw); PrintWriter out = new PrintWriter(bw)) {
+    // Ghi vào file
+    File file = new File("C:\\Users\\Admin\\Documents\\CMU_254ZIS\\DOANNHOM\\src\\other\\thanhtoanadm.txt");
+    boolean fileExists = file.exists();
 
-                out.println(tenMon + "," + gia + "," + soBan);
+    try (FileWriter fw = new FileWriter(file, true);
+         BufferedWriter bw = new BufferedWriter(fw);
+         PrintWriter out = new PrintWriter(bw)) {
 
-            } catch (IOException ioEx) {
-                JOptionPane.showMessageDialog(null, "Lỗi khi ghi file: " + ioEx.getMessage());
-            }
-
-            // Xoá nội dung các ô nhập
-            txtTenMon.setText("");
-            txtGia.setText("");
-            txtSoBan.setText("");
-
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(null, "Giá phải là số hợp lệ.");
+        if (!fileExists) {
+            out.printf("%-20s %-15s %-10s%n", "Tên Món", "Giá", "Số Bàn");
         }
+        out.printf("%-20s %-15s %-10s%n", tenMon, giaFormatted, soBan);
 
+    } catch (IOException ioEx) {
+        JOptionPane.showMessageDialog(null, "Lỗi khi ghi file: " + ioEx.getMessage());
+    }
+
+    // Xoá nội dung các ô nhập
+    txtTenMon.setText("");
+    txtGia.setText("");
+    txtSoBan.setText("");
+
+} catch (NumberFormatException ex) {
+    JOptionPane.showMessageDialog(null, "Giá phải là số hợp lệ.");
+}
         // TODO add your handling code here:
     }//GEN-LAST:event_btnThemActionPerformed
 

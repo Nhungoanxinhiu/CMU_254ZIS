@@ -25,7 +25,7 @@ public class CartFrame extends javax.swing.JFrame {
     public CartFrame() {
         initComponents();
         loadTable();
-        this.setLocationRelativeTo(null); // Dòng này căn giữa cửa sổ
+        this.setLocationRelativeTo(null); 
     }
 
     private void loadTable() {
