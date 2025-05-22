@@ -34,23 +34,21 @@ public class ThongKeFrame extends JFrame {
         setSize(800, 600);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-         setLayout(new BorderLayout(10, 10));
+        setLayout(new BorderLayout(10, 10));
         Color bgColor = new Color(242, 220, 194);
         getContentPane().setBackground(bgColor);
         // In ra thư mục chạy hiện tại để debug
         System.out.println("Working Directory: " + System.getProperty("user.dir"));
 
-        
         setLayout(new BorderLayout(10, 10));
 
-        
         tableModel = new DefaultTableModel(new Object[]{"Tên SP", "Giá", "Số lượng"}, 0);
         table = new JTable(tableModel);
         JScrollPane scrollPane = new JScrollPane(table);
         table.setPreferredScrollableViewportSize(new Dimension(780, 150));
         JTableHeader header = table.getTableHeader();
-        header.setBackground(Color.WHITE);             
-        header.setForeground(Color.DARK_GRAY);         
+        header.setBackground(Color.WHITE);
+        header.setForeground(Color.DARK_GRAY);
         header.setFont(new Font("Segoe UI", Font.BOLD, 14));
         // Khu vực nút
         JPanel buttonPanel = new JPanel();
@@ -58,18 +56,18 @@ public class ThongKeFrame extends JFrame {
         JButton btnThongKe = new JButton("Thống kê");
         buttonPanel.add(btnCapNhat);
         buttonPanel.add(btnThongKe);
-JButton btnTroVe = new JButton("Trở về"); // Thêm nút Trở về
-buttonPanel.add(btnTroVe); // Thêm nút vào panel
+        JButton btnTroVe = new JButton("Trở về"); // Thêm nút Trở về
+        buttonPanel.add(btnTroVe); // Thêm nút vào panel
 
-btnTroVe.setBackground(new Color(240, 240, 240));
-btnTroVe.setForeground(Color.BLACK);
-btnTroVe.setFont(new Font("Segoe UI", Font.BOLD, 12));
+        btnTroVe.setBackground(new Color(240, 240, 240));
+        btnTroVe.setForeground(Color.BLACK);
+        btnTroVe.setFont(new Font("Segoe UI", Font.BOLD, 12));
 
-// Sự kiện nút Trở về
-btnTroVe.addActionListener(e -> {
-    new HomeAdmin().setVisible(true); // Mở giao diện HomeAdmin
-    dispose(); // Đóng giao diện thống kê hiện tại
-});
+        // Sự kiện nút Trở về
+        btnTroVe.addActionListener(e -> {
+            new HomeAdmin().setVisible(true); // Mở giao diện HomeAdmin
+            dispose(); // Đóng giao diện thống kê hiện tại
+        });
         // Panel chứa biểu đồ
         chartPanelContainer = new JPanel(new BorderLayout());
         chartPanelContainer.setPreferredSize(new Dimension(800, 300));
@@ -165,7 +163,7 @@ btnTroVe.addActionListener(e -> {
 
     private List<HoaDon> docFileThongThuong(String fileName) {
         List<HoaDon> list = new ArrayList<>();
-        String filePath = "C:\\Users\\Admin\\Documents\\CMU_254ZIS\\DOANNHOM\\src\\other\\" + fileName;
+        String filePath = "C:\\Users\\TAN THANG HOA COM\\Documents\\GitHub\\CMU_254ZIS\\DOANNHOM\\src\\other\\" + fileName;
         System.out.println("Đang đọc file thường tại: " + filePath);
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
@@ -193,7 +191,7 @@ btnTroVe.addActionListener(e -> {
 
     private List<HoaDon> docFileAdmin(String fileName) {
         List<HoaDon> list = new ArrayList<>();
-        String filePath = "C:\\Users\\Admin\\Documents\\CMU_254ZIS\\DOANNHOM\\src\\other\\" + fileName;
+        String filePath = "C:\\Users\\TAN THANG HOA COM\\Documents\\GitHub\\CMU_254ZIS\\DOANNHOM\\src\\other\\" + fileName;
         System.out.println("Đang đọc file admin tại: " + filePath);
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;

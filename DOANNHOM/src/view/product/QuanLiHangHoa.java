@@ -11,6 +11,7 @@ import java.io.IOException;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import view.admin.HomeAdmin;
 
 /**
  *
@@ -24,35 +25,51 @@ public class QuanLiHangHoa extends javax.swing.JFrame {
     public QuanLiHangHoa() {
         initComponents();
         this.setLocationRelativeTo(null); // Dòng này căn giữa cửa sổ
+        tableHangHoa.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                int selectedRow = tableHangHoa.getSelectedRow();
+                if (selectedRow != -1) {
+                    String tenHangHoa = tableHangHoa.getValueAt(selectedRow, 1).toString();
+                    String soLuong = tableHangHoa.getValueAt(selectedRow, 2).toString();
+                    String chiPhi = tableHangHoa.getValueAt(selectedRow, 3).toString();
+
+                    textField1.setText(tenHangHoa);
+                    textField2.setText(soLuong);
+                    textField3.setText(chiPhi);
+                }
+            }
+        });
     }
+
     public void saveToFile(JTable table) {
-    try {
-        File file = new File("C:\\Users\\Admin\\Documents\\CMU_254ZIS\\DOANNHOM\\src\\other\\danhsach_hanghoa.txt");
-        FileWriter fw = new FileWriter(file);
-        BufferedWriter bw = new BufferedWriter(fw);
+        try {
+            File file = new File("C:\\\\Users\\\\TAN THANG HOA COM\\\\Documents\\\\GitHub\\\\CMU_254ZIS\\\\DOANNHOM\\\\src\\\\other\\\\danhsach_hanghoa.txt");
+            FileWriter fw = new FileWriter(file);
+            BufferedWriter bw = new BufferedWriter(fw);
 
-        // Ghi tên cột
-        for (int i = 0; i < table.getColumnCount(); i++) {
-            bw.write(table.getColumnName(i) + "\t");
-        }
-        bw.newLine();
-
-        // Ghi từng dòng dữ liệu
-        for (int i = 0; i < table.getRowCount(); i++) {
-            for (int j = 0; j < table.getColumnCount(); j++) {
-                Object value = table.getValueAt(i, j);
-                bw.write((value != null ? value.toString() : "") + "\t");
+            // Ghi tên cột
+            for (int i = 0; i < table.getColumnCount(); i++) {
+                bw.write(table.getColumnName(i) + "\t");
             }
             bw.newLine();
-        }
 
-        bw.close();
-        fw.close();
-        JOptionPane.showMessageDialog(null, "Lưu thành công vào src/other/danhsach_hanghoa.txt");
-    } catch (IOException e) {
-        JOptionPane.showMessageDialog(null, "Lỗi khi lưu: " + e.getMessage());
+            // Ghi từng dòng dữ liệu
+            for (int i = 0; i < table.getRowCount(); i++) {
+                for (int j = 0; j < table.getColumnCount(); j++) {
+                    Object value = table.getValueAt(i, j);
+                    bw.write((value != null ? value.toString() : "") + "\t");
+                }
+                bw.newLine();
+            }
+
+            bw.close();
+            fw.close();
+            JOptionPane.showMessageDialog(null, "Lưu thành công vào src/other/danhsach_hanghoa.txt");
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Lỗi khi lưu: " + e.getMessage());
+        }
     }
-}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -100,11 +117,7 @@ public class QuanLiHangHoa extends javax.swing.JFrame {
 
         tableHangHoa.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "STT", "Tên hàng hoá", "Số lượng", "Chi phí", "Tổng tiền"
@@ -289,6 +302,13 @@ public class QuanLiHangHoa extends javax.swing.JFrame {
         // Thêm dòng mới vào bảng
         DefaultTableModel model = (DefaultTableModel) tableHangHoa.getModel();
         model.addRow(new Object[]{model.getRowCount() + 1, tenHangHoa, soLuong, chiPhi, tongTien});
+        // Xóa dữ liệu trong text field sau khi thêm
+        textField1.setText("");
+        textField2.setText("");
+        textField3.setText("");
+
+        // Đặt focus lại vào txtMa để tiện nhập tiếp
+        textField1.requestFocus();
     }//GEN-LAST:event_button1ActionPerformed
 
     private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
@@ -297,6 +317,11 @@ public class QuanLiHangHoa extends javax.swing.JFrame {
         if (selectedRow != -1) {
             DefaultTableModel model = (DefaultTableModel) tableHangHoa.getModel();
             model.removeRow(selectedRow); // Xóa dòng đã chọn
+
+            // Cập nhật lại cột STT
+            for (int i = 0; i < model.getRowCount(); i++) {
+                model.setValueAt(i + 1, i, 0); // cập nhật STT (cột 0)
+            }
         } else {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn một dòng để xóa!");
         }
@@ -328,6 +353,14 @@ public class QuanLiHangHoa extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn một dòng để cập nhật!");
         }
+
+        // Xóa dữ liệu trong text field sau khi thêm
+        textField1.setText("");
+        textField2.setText("");
+        textField3.setText("");
+
+        // Đặt focus lại vào txtMa để tiện nhập tiếp
+        textField1.requestFocus();
     }//GEN-LAST:event_button3ActionPerformed
 
     private void button4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button4ActionPerformed
@@ -364,13 +397,14 @@ public class QuanLiHangHoa extends javax.swing.JFrame {
     }//GEN-LAST:event_button4ActionPerformed
 
     private void button5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button5ActionPerformed
-        // TODO add your handling code here:
+        new HomeAdmin().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_button5ActionPerformed
 
     private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
 
         saveToFile(tableHangHoa);
-            // TODO add your handling code here:
+        // TODO add your handling code here:
     }//GEN-LAST:event_btnLuuActionPerformed
 
     /**

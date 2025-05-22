@@ -4,9 +4,13 @@
  */
 package view.admin;
 
-
+import javax.swing.JOptionPane;
+import view.auth.RoleSelection1;
 import view.customer.CSKH;
-
+import view.income.ThuNhapQuanLy;
+import view.paymenadmin.TTAdmin;
+import view.product.QuanLiHangHoa;
+import view.statistics.ThongKeFrame;
 
 /**
  *
@@ -65,7 +69,7 @@ public class HomeAdmin extends javax.swing.JFrame {
 
         button6.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         button6.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        button6.setLabel("Thanh toán");
+        button6.setLabel("Thanh Toán");
         button6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 button6ActionPerformed(evt);
@@ -74,7 +78,7 @@ public class HomeAdmin extends javax.swing.JFrame {
 
         button7.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         button7.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        button7.setLabel("Nguyên liệu");
+        button7.setLabel("Hàng Hoá");
         button7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 button7ActionPerformed(evt);
@@ -83,7 +87,7 @@ public class HomeAdmin extends javax.swing.JFrame {
 
         button8.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         button8.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        button8.setLabel("Phản hồi");
+        button8.setLabel("Phản Hồi");
         button8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 button8ActionPerformed(evt);
@@ -92,7 +96,7 @@ public class HomeAdmin extends javax.swing.JFrame {
 
         button9.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         button9.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        button9.setLabel("Menu");
+        button9.setLabel("Thống Kê");
         button9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 button9ActionPerformed(evt);
@@ -172,11 +176,15 @@ public class HomeAdmin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void button3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button3ActionPerformed
-        // TODO add your handling code here:
+        ThuNhapQuanLy tnql = new ThuNhapQuanLy();
+        this.setVisible(false);
+        tnql.setVisible(true);
     }//GEN-LAST:event_button3ActionPerformed
 
     private void button6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button6ActionPerformed
-
+        TTAdmin ttadmin = new TTAdmin();
+        this.setVisible(false);
+        ttadmin.setVisible(true);
     }//GEN-LAST:event_button6ActionPerformed
 
     private void button8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button8ActionPerformed
@@ -187,15 +195,29 @@ public class HomeAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_button8ActionPerformed
 
     private void button7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button7ActionPerformed
-        // TODO add your handling code here:
+        QuanLiHangHoa qlhh = new QuanLiHangHoa();
+        this.setVisible(false);
+        qlhh.setVisible(true);
     }//GEN-LAST:event_button7ActionPerformed
 
     private void button9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button9ActionPerformed
-        // TODO add your handling code here:
+        ThongKeFrame thongKe = new ThongKeFrame();
+        thongKe.setVisible(true);
+        thongKe.setLocationRelativeTo(null); // căn giữa màn hình
+
+        // Ẩn cửa sổ hiện tại (nếu muốn)
+        this.dispose();
     }//GEN-LAST:event_button9ActionPerformed
 
     private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
-        // TODO add your handling code here:
+        int confirm = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn đăng xuất?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            this.dispose(); // Đóng frame hiện tại
+
+            // Mở lại màn hình đăng nhập
+            new RoleSelection1().setVisible(true);
+        }
     }//GEN-LAST:event_button2ActionPerformed
 
     /**

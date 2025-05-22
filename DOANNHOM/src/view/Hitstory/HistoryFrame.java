@@ -7,6 +7,7 @@ import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import model.DonHang;
 import view.feedback.GiaoDienFeadback;
+import view.payment.PaymentFrame;
 
 public class HistoryFrame extends JFrame {
 
@@ -77,7 +78,6 @@ public class HistoryFrame extends JFrame {
         btnBack.setFocusPainted(false);
         btnBack.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
 
-        
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 20, 10));
         bottomPanel.setBackground(mainColor);
         bottomPanel.add(btnBack);
@@ -94,11 +94,16 @@ public class HistoryFrame extends JFrame {
             DonHang dh = AppController.lichSuDonHang.get(selectedRow);
             GiaoDienFeadback dgFrame = new GiaoDienFeadback(dh);
             dgFrame.setVisible(true);
+            // Đóng cửa sổ hiện tại sau khi mở giao diện đánh giá
+            dispose();
         });
 
         // ==== Sự kiện nút quay lại ====
         btnBack.addActionListener(e -> {
-            dispose(); // Đóng frame hiện tại
+            dispose(); // Đóng ThongKeFrame hiện tại
+
+            // Mở lại trang Thanh toán
+            new PaymentFrame().setVisible(true);
         });
 
         getContentPane().setBackground(mainColor);

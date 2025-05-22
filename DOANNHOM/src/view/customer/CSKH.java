@@ -4,6 +4,14 @@
  */
 package view.customer;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.table.DefaultTableModel;
 import view.admin.HomeAdmin;
 
 /**
@@ -13,12 +21,15 @@ import view.admin.HomeAdmin;
 public class CSKH extends javax.swing.JFrame {
 
     private HomeAdmin homeAdmin;  // Biến tham chiếu tới AdminHome
+    private List<Object[]> originalData = new ArrayList<>(); // Lưu dữ liệu gốc của bảng
+    private DefaultTableModel model; // Mô hình bảng để quản lý dữ liệu
 
     // Constructor nhận tham chiếu AdminHome
     public CSKH(HomeAdmin homeAdmin) {
         initComponents();
         this.homeAdmin = homeAdmin; // Lưu tham chiếu vào biến
         this.setLocationRelativeTo(null); // Căn giữa cửa sổ
+        initTableSearch(); // Khởi tạo chức năng tìm kiếm
     }
     // Thêm một phương thức trong CSKH để nhận dữ liệu từ GiaoDienFeadback
 
@@ -39,29 +50,27 @@ public class CSKH extends javax.swing.JFrame {
 
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        textField1 = new java.awt.TextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        save = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        CapNhap = new javax.swing.JButton();
+        txtTimKiem = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel2.setBackground(new java.awt.Color(242, 220, 194));
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setText("Tìm kiếm khách hàng:");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+
             },
             new String [] {
-                "ID", "Tên Khách Hàng", "Nội Dung Phản Hồi", "Đánh Giá", "Ngày Gửi", "Trạng Thái"
+                "STT", "Tên Khách Hàng", "Nội Dung Phản Hồi", "Đánh Giá", "Ngày Gửi"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -74,60 +83,77 @@ public class CSKH extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        jButton2.setText("SAVE");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        save.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        save.setText("SAVE");
+        save.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                saveActionPerformed(evt);
             }
         });
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jLabel1.setText("QUẢN LÝ PHẢN HỒI CỦA KHÁCH HÀNG");
 
+        CapNhap.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        CapNhap.setText("Cập Nhập");
+        CapNhap.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CapNhapActionPerformed(evt);
+            }
+        });
+
+        txtTimKiem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTimKiemActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 665, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(25, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton2)
-                        .addGap(36, 36, 36))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(98, 98, 98))))
+                        .addGap(98, 98, 98))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addGap(28, 28, 28)
+                        .addComponent(save)
+                        .addGap(53, 53, 53))))
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(52, 52, 52)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(textField1, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 665, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addGap(52, 52, 52)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(CapNhap, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(33, 33, 33)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
+                .addGap(25, 25, 25)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(textField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(31, 31, 31)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel2)
+                        .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(CapNhap, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(19, 19, 19)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addGap(0, 12, Short.MAX_VALUE))
+                    .addComponent(save, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 16, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -150,9 +176,151 @@ public class CSKH extends javax.swing.JFrame {
         this.dispose();  // Đóng cửa sổ CSKH
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
+        java.io.File file = new java.io.File("C:\\Users\\TAN THANG HOA COM\\Documents\\GitHub\\CMU_254ZIS\\DOANNHOM\\src\\other\\CSKH.txt");
+
+        try (java.io.BufferedWriter writer = new java.io.BufferedWriter(new java.io.FileWriter(file))) {
+            for (int i = 0; i < jTable1.getRowCount(); i++) {
+                String stt = jTable1.getValueAt(i, 0).toString();
+                String tenKH = jTable1.getValueAt(i, 1).toString();
+                String noiDung = jTable1.getValueAt(i, 2).toString();
+                String danhGia = jTable1.getValueAt(i, 3).toString();
+                String ngayGui = jTable1.getValueAt(i, 4).toString();
+
+                // Viết vào file theo định dạng đơn giản
+                writer.write("STT: " + stt);
+                writer.newLine();
+                writer.write("Tên Khách Hàng: " + tenKH);
+                writer.newLine();
+                writer.write("Nội Dung Phản Hồi: " + noiDung);
+                writer.newLine();
+                writer.write("Đánh Giá: " + danhGia);
+                writer.newLine();
+                writer.write("Ngày Gửi: " + ngayGui);
+                writer.newLine();
+                writer.write("-----");
+                writer.newLine();
+            }
+
+            javax.swing.JOptionPane.showMessageDialog(this, "Lưu phản hồi thành công vào CSKH.txt!");
+
+        } catch (IOException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Lỗi khi lưu file: " + e.getMessage());
+        }
+    }//GEN-LAST:event_saveActionPerformed
+
+    private void CapNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CapNhapActionPerformed
+        // Nếu bạn để file trong thư mục dự án:
+        String fileFeedback = "C:\\Users\\TAN THANG HOA COM\\Documents\\GitHub\\CMU_254ZIS\\DOANNHOM\\src\\other\\fb.txt";
+        String fileThanhToan = "C:\\Users\\TAN THANG HOA COM\\Documents\\GitHub\\CMU_254ZIS\\DOANNHOM\\src\\other\\thanhtoan.txt";
+
+        docDuLieuTuFile(fileFeedback, fileThanhToan);
+    }//GEN-LAST:event_CapNhapActionPerformed
+
+    private void txtTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTimKiemActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_txtTimKiemActionPerformed
+    private void docDuLieuTuFile(String fileFeedback, String fileThanhToan) {
+        model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0); // Xóa dữ liệu cũ
+        originalData.clear(); // Xóa dữ liệu gốc cũ
+
+        try (
+                BufferedReader brFeedback = new BufferedReader(new FileReader(fileFeedback)); BufferedReader brTT = new BufferedReader(new FileReader(fileThanhToan))) {
+            java.util.List<String> danhSachTen = new java.util.ArrayList<>();
+            String dong;
+            while ((dong = brTT.readLine()) != null) {
+                if (dong.startsWith("Họ tên:")) {
+                    String tenKH = dong.replace("Họ tên:", "").trim();
+                    danhSachTen.add(tenKH);
+                }
+            }
+
+            int stt = 1;
+            int viTriTen = 0;
+            String line;
+            while ((line = brFeedback.readLine()) != null) {
+                if (line.startsWith("Số sao:")) {
+                    int soSao = Integer.parseInt(line.replace("Số sao:", "").trim());
+                    String nhanXetLine = brFeedback.readLine();
+                    String nhanXet = nhanXetLine != null && nhanXetLine.startsWith("Nhận xét:")
+                            ? nhanXetLine.replace("Nhận xét:", "").trim() : "";
+                    brFeedback.readLine();
+                    String tenKH = viTriTen < danhSachTen.size() ? danhSachTen.get(viTriTen) : "Không rõ";
+                    viTriTen++;
+                    String ngayGui = java.time.LocalDate.now().toString();
+                    Object[] row = new Object[]{stt, tenKH, nhanXet, soSao, ngayGui};
+                    originalData.add(row); // Lưu hàng vào dữ liệu gốc
+                    model.addRow(row); // Thêm hàng vào bảng
+                    stt++;
+                }
+            }
+        } catch (IOException | NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Lỗi khi đọc file: " + e.getMessage());
+        }
+    }
+
+    private void initTableSearch() {
+        model = (DefaultTableModel) jTable1.getModel();
+
+        txtTimKiem.getDocument().addDocumentListener(new DocumentListener() {
+            public void insertUpdate(DocumentEvent e) {
+                timKiem();
+            }
+
+            public void removeUpdate(DocumentEvent e) {
+                timKiem();
+            }
+
+            public void changedUpdate(DocumentEvent e) {
+                timKiem();
+            }
+
+            private void timKiem() {
+                String text = txtTimKiem.getText().trim().toLowerCase();
+                model.setRowCount(0); // Xóa bảng hiện tại
+
+                // Nếu chuỗi tìm kiếm rỗng, hiển thị tất cả dữ liệu
+                if (text.isEmpty()) {
+                    for (Object[] row : originalData) {
+                        model.addRow(row);
+                    }
+                } else {
+                    // Lọc dữ liệu dựa trên tên khách hàng
+                    for (Object[] row : originalData) {
+                        if (row[1] != null) { // Kiểm tra null để tránh lỗi
+                            String tenKhachHang = row[1].toString().toLowerCase();
+                            if (tenKhachHang.contains(text)) {
+                                model.addRow(row);
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    private void timKiem() {
+        String text = txtTimKiem.getText().trim().toLowerCase();
+        model.setRowCount(0); // Xóa bảng hiện tại
+
+        // Nếu chuỗi tìm kiếm rỗng, hiển thị tất cả dữ liệu
+        if (text.isEmpty()) {
+            for (Object[] row : originalData) {
+                model.addRow(row);
+            }
+        } else {
+            // Lọc dữ liệu dựa trên tên khách hàng
+            for (Object[] row : originalData) {
+                if (row[1] != null) { // Kiểm tra null để tránh lỗi
+                    String tenKhachHang = row[1].toString().toLowerCase();
+                    if (tenKhachHang.contains(text)) {
+                        model.addRow(row);
+                    }
+                }
+            }
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -188,13 +356,14 @@ public class CSKH extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton CapNhap;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private java.awt.TextField textField1;
+    private javax.swing.JButton save;
+    private javax.swing.JTextField txtTimKiem;
     // End of variables declaration//GEN-END:variables
 }

@@ -10,12 +10,91 @@ Tổng tiền: 65.000
 =========================================
 
 === ĐƠN HÀNG MỚI ===
-Họ tên: 
+Họ tên: nguyen
 Số điện thoại: 
 Địa chỉ: 
 Ghi chú: 
 --- Chi tiết đơn hàng ---
 1	Trà sữa trứng nướng	1	35000	
 Tổng tiền: 35.000
+=========================================
+
+=== ĐƠN HÀNG MỚI ===
+Họ tên: nguyen
+Số điện thoại: 0390
+Địa chỉ: sdf
+Ghi chú: dff
+--- Chi tiết đơn hàng ---
+1	Trà sữa trứng nướng	1	35000	
+2	Coffee sữa	1	30000	
+3	Coffee muối	1	30000	
+Tổng tiền: 95.000
+=========================================
+
+=== ĐƠN HÀNG MỚI ===
+Họ tên: giao
+Số điện thoại: 2323
+Địa chỉ: erwwq
+Ghi chú: erwqd
+--- Chi tiết đơn hàng ---
+1	Trà sữa nho	1	30000	
+2	Coffee muối	1	30000	
+3	Capuchino	1	40000	
+Tổng tiền: 100.000
+=========================================
+
+=== ĐƠN HÀNG MỚI ===
+Họ tên: quynh giao
+Số điện thoại: 0394029
+Địa chỉ: sfdsfweef
+Ghi chú: sdfsdfqewe
+--- Chi tiết đơn hàng ---
+1	Trà vải	1	30000	
+2	Trà đào	1	30000	
+3	Coffee sữa	1	30000	
+Tổng tiền: 90.000
+=========================================
+
+=== ĐƠN HÀNG MỚI ===
+Họ tên: tien
+Số điện thoại: 3u43294
+Địa chỉ: sdf
+Ghi chú: sdf
+--- Chi tiết đơn hàng ---
+1	Trà sữa trứng nướng	1	35000	
+2	Trà Đào	1	30000	
+Tổng tiền: 65.000
+=========================================
+
+=== ĐƠN HÀNG MỚI ===
+Họ tên: tien
+Số điện thoại: 08764
+Địa chỉ: erggt
+Ghi chú: ffrrf
+--- Chi tiết đơn hàng ---
+1	Trà sữa dâu	1	30000	
+2	Trà vải	1	30000	
+3	Coffee sữa	1	30000	
+Tổng tiền: 90.000
+=========================================
+
+=== ĐƠN HÀNG MỚI ===
+Họ tên: tien
+Số điện thoại: 32344
+Địa chỉ: w
+Ghi chú: e
+--- Chi tiết đơn hàng ---
+1	Trà sữa trứng nướng	1	35000	
+2	Trà vải	1	30000	
+Tổng tiền: 65.000
+=========================================
+
+=== ĐƠN HÀNG MỚI ===
+Họ tên: sa
+Số điện thoại: s
+Địa chỉ: sa
+Ghi chú: 
+--- Chi tiết đơn hàng ---
+Tổng tiền: 0
 =========================================
 

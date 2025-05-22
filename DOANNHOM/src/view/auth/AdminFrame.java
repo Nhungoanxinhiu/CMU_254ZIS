@@ -3,8 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package view.auth;
+
 import view.admin.HomeAdmin;
 import javax.swing.JOptionPane;
+
 /**
  *
  * @author Admin
@@ -18,7 +20,6 @@ public class AdminFrame extends javax.swing.JFrame {
         initComponents();
     }
 
-   
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -128,6 +129,11 @@ public class AdminFrame extends javax.swing.JFrame {
         String username = txtName.getText();
         String password = new String(txtPassword1.getPassword());
         if (username.equals("admin") && password.equals("123")) {
+            JOptionPane.showMessageDialog(this, "Đăng nhập thành công!");
+            HomeAdmin trangchinh = new HomeAdmin();
+            trangchinh.setVisible(true);
+            this.dispose();
+        } else if (username.equals("nguyen") && password.equals("1234")) {
             JOptionPane.showMessageDialog(this, "Đăng nhập thành công!");
             HomeAdmin trangchinh = new HomeAdmin();
             trangchinh.setVisible(true);

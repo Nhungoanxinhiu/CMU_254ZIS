@@ -3,11 +3,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package view.auth;
+
 import java.io.File;
 import java.io.IOException;
 import javax.swing.JOptionPane;
 import view.menu.MenuFrame;
 import java.io.FileWriter;
+
 /**
  *
  * @author Admin
@@ -20,22 +22,22 @@ public class CustomerRegisterFrame extends javax.swing.JFrame {
     public CustomerRegisterFrame() {
         initComponents();
     }
-   private void saveToFile(String username, String password) throws IOException {
-    // Tạo FileWriter để ghi vào file customer.txt. "true" để thêm thông tin vào cuối file thay vì ghi đè
-    File directory = new File("src/other");
-    if (!directory.exists()) {
-        directory.mkdirs();  // Tạo thư mục nếu nó không tồn tại
+
+    private void saveToFile(String username, String password) throws IOException {
+        // Tạo FileWriter để ghi vào file customer.txt. "true" để thêm thông tin vào cuối file thay vì ghi đè
+        File directory = new File("src/other");
+        if (!directory.exists()) {
+            directory.mkdirs();  // Tạo thư mục nếu nó không tồn tại
+        }
+
+        // Lưu thông tin vào file customer.txt trong thư mục src/other
+        FileWriter writer = new FileWriter("src/other/customers.txt", true);
+
+        // Ghi username và password vào file
+        writer.write(username + "," + password + "\n");
+
+        writer.close();
     }
-
-    // Lưu thông tin vào file customer.txt trong thư mục src/other
-    FileWriter writer = new FileWriter("src/other/customers.txt", true);
-
-    // Ghi username và password vào file
-    writer.write(username + "," + password + "\n");
-
-    writer.close();
-}
-     
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -154,12 +156,12 @@ public class CustomerRegisterFrame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 410, Short.MAX_VALUE)
+            .addGap(0, 398, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 6, Short.MAX_VALUE)
+                    .addGap(0, 0, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 7, Short.MAX_VALUE)))
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -175,35 +177,35 @@ public class CustomerRegisterFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegisterActionPerformedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformedActionPerformed
- String username = txtUsername.getText();
-    String password = new String(txtPassword.getPassword());
-    String confirmPassword = new String(txtConfirmPassword.getPassword());
+        String username = txtUsername.getText();
+        String password = new String(txtPassword.getPassword());
+        String confirmPassword = new String(txtConfirmPassword.getPassword());
 
-    if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin!");
-        return;
-    }
+        if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin!");
+            return;
+        }
 
-    if (!password.equals(confirmPassword)) {
-        JOptionPane.showMessageDialog(this, "Mật khẩu không khớp. Vui lòng nhập lại!");
-        return;
-    }
+        if (!password.equals(confirmPassword)) {
+            JOptionPane.showMessageDialog(this, "Mật khẩu không khớp. Vui lòng nhập lại!");
+            return;
+        }
 
-    try {
-        saveToFile(username, password);  // Lưu vào file customer.txt
-        JOptionPane.showMessageDialog(this, "Đăng ký thành công!");
+        try {
+            saveToFile(username, password);  // Lưu vào file customer.txt
+            JOptionPane.showMessageDialog(this, "Đăng ký thành công!");
 
-        // Mở MenuFrame sau khi đăng ký
-        MenuFrame menu = new MenuFrame();
-        menu.setVisible(true);
-        this.dispose(); // Đóng giao diện đăng ký
+            // Mở MenuFrame sau khi đăng ký
+            CustomerFrame cf = new CustomerFrame();
+            cf.setVisible(true);
+            this.dispose(); // Đóng giao diện đăng ký
 
-    } catch (IOException e) {
-        JOptionPane.showMessageDialog(this, "Lỗi khi lưu thông tin: " + e.getMessage());
-    }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Lỗi khi lưu thông tin: " + e.getMessage());
+        }
 
     }//GEN-LAST:event_btnRegisterActionPerformedActionPerformed
-    
+
     /**
      * @param args the command line arguments
      */

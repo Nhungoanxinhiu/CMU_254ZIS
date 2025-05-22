@@ -142,7 +142,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Times New Roman" size="18" style="1"/>
             </Property>
-            <Property name="label" type="java.lang.String" value="Thanh to&#xe1;n"/>
+            <Property name="label" type="java.lang.String" value="Thanh To&#xe1;n"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button6ActionPerformed"/>
@@ -156,7 +156,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Times New Roman" size="18" style="1"/>
             </Property>
-            <Property name="label" type="java.lang.String" value="Nguy&#xea;n li&#x1ec7;u"/>
+            <Property name="label" type="java.lang.String" value="H&#xe0;ng Ho&#xe1;"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button7ActionPerformed"/>
@@ -170,7 +170,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Times New Roman" size="18" style="1"/>
             </Property>
-            <Property name="label" type="java.lang.String" value="Ph&#x1ea3;n h&#x1ed3;i"/>
+            <Property name="label" type="java.lang.String" value="Ph&#x1ea3;n H&#x1ed3;i"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button8ActionPerformed"/>
@@ -184,7 +184,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Times New Roman" size="18" style="1"/>
             </Property>
-            <Property name="label" type="java.lang.String" value="Menu"/>
+            <Property name="label" type="java.lang.String" value="Th&#x1ed1;ng K&#xea;"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button9ActionPerformed"/>

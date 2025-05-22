@@ -54,7 +54,7 @@ public class GiaoDienFeadback extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Vui lòng chọn số sao trước khi gửi!");
         return;
     }
-    try (FileWriter writer = new FileWriter("C:\\Users\\Admin\\Documents\\CMU_254ZIS\\DOANNHOM\\src\\other\\fb.txt", true)) {
+    try (FileWriter writer = new FileWriter("C:\\Users\\TAN THANG HOA COM\\Documents\\GitHub\\CMU_254ZIS\\DOANNHOM\\src\\other\\fb.txt", true)) {
     writer.write("Số sao: " + rating + "\n");
     writer.write("Nhận xét: " + jTextArea1.getText().trim() + "\n");
     writer.write("------------------------------\n");
