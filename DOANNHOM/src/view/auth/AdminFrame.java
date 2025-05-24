@@ -18,6 +18,8 @@ public class AdminFrame extends javax.swing.JFrame {
      */
     public AdminFrame() {
         initComponents();
+        this.setLocationRelativeTo(null); // Dòng này căn giữa cửa sổ
+
     }
 
     @SuppressWarnings("unchecked")

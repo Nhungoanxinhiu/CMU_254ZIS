@@ -16,6 +16,8 @@ public class CustomerFrame extends javax.swing.JFrame {
      */
     public CustomerFrame() {
         initComponents();
+        this.setLocationRelativeTo(null); // Dòng này căn giữa cửa sổ
+
     }
 
     

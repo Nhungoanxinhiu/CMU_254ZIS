@@ -15,6 +15,8 @@ public class RoleSelection1 extends javax.swing.JFrame {
      */
     public RoleSelection1() {
         initComponents();
+        this.setLocationRelativeTo(null); // Dòng này căn giữa cửa sổ
+
     }
 
     /**
@@ -119,7 +121,7 @@ public class RoleSelection1 extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         CustomerFrame customerForm = new CustomerFrame();
         customerForm.setVisible(true);
-        this.dispose(); 
+        this.dispose();
 
 
     }//GEN-LAST:event_jButton1ActionPerformed

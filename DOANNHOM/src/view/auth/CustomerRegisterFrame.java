@@ -21,6 +21,8 @@ public class CustomerRegisterFrame extends javax.swing.JFrame {
      */
     public CustomerRegisterFrame() {
         initComponents();
+        this.setLocationRelativeTo(null); // Dòng này căn giữa cửa sổ
+
     }
 
     private void saveToFile(String username, String password) throws IOException {
